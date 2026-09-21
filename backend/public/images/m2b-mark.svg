@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="m2b-mark-g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22c55e"/>
+      <stop offset="1" stop-color="#14532d"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#m2b-mark-g)"/>
+  <rect x="106" y="272" width="76" height="120" rx="22" fill="#fff" fill-opacity=".55"/>
+  <rect x="218" y="202" width="76" height="190" rx="22" fill="#fff" fill-opacity=".78"/>
+  <rect x="330" y="122" width="76" height="270" rx="22" fill="#fff"/>
+  <rect x="86" y="416" width="340" height="14" rx="7" fill="#fff" fill-opacity=".35"/>
+</svg>

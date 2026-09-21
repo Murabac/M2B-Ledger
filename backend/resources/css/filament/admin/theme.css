@@ -1,0 +1,604 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import '../../../../vendor/filament/filament/resources/css/base.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+/*
+ |--------------------------------------------------------------------------
+ | M2B Ledger design tokens
+ | Listed in /docs/DESIGN.md
+ |--------------------------------------------------------------------------
+ */
+
+:root {
+    --m2b-green-50: #f0fdf4;
+    --m2b-green-100: #dcfce7;
+    --m2b-green-200: #bbf7d0;
+    --m2b-green-300: #86efac;
+    --m2b-green-400: #4ade80;
+    --m2b-green-500: #22c55e;
+    --m2b-green-600: #16a34a;
+    --m2b-green-700: #15803d;
+    --m2b-green-800: #166534;
+    --m2b-green-900: #14532d;
+    --m2b-green-950: #052e16;
+
+    --m2b-page: #f9fafb;
+    --m2b-card: #ffffff;
+    --m2b-border: #e5e7eb;
+    --m2b-shadow: 0 1px 2px rgb(15 23 42 / 0.05), 0 8px 24px rgb(15 23 42 / 0.04);
+    --m2b-radius: 0.75rem;
+    --m2b-space: 1.5rem;
+    --m2b-font: Inter, ui-sans-serif, system-ui, sans-serif;
+    --m2b-body-size: 15px;
+
+    /* Light chrome — polished shell (dark mode overrides below) */
+    --m2b-sidebar: #166534;
+    --m2b-sidebar-header: #166534;
+    --m2b-topbar: #166534;
+    --m2b-chrome-border: rgba(255, 255, 255, 0.10);
+    --m2b-chrome-text: rgba(255, 255, 255, 0.80);
+    --m2b-chrome-muted: rgba(255, 255, 255, 0.80);
+    --m2b-chrome-hover: rgba(255, 255, 255, 0.08);
+    --m2b-chrome-active-bg: rgba(255, 255, 255, 0.16);
+    --m2b-chrome-active-text: #ffffff;
+    --m2b-chrome-active-icon: #ffffff;
+}
+
+.dark {
+    /* Green-tinted neutrals (replace blue-black grays) */
+    --gray-50: 240, 253, 244;
+    --gray-100: 220, 240, 228;
+    --gray-200: 180, 205, 190;
+    --gray-300: 143, 167, 154;
+    --gray-400: 120, 150, 135;
+    --gray-500: 100, 130, 115;
+    --gray-600: 70, 100, 85;
+    --gray-700: 40, 65, 52;
+    --gray-800: 26, 43, 34;
+    --gray-900: 13, 24, 19;
+    --gray-950: 6, 13, 10;
+
+    --m2b-page: #060d0a;
+    --m2b-card: #0d1813;
+    --m2b-border: #1a2b22;
+    --m2b-shadow: 0 1px 2px rgb(0 0 0 / 0.35), 0 8px 28px rgb(0 0 0 / 0.28);
+    --m2b-text: #f0fdf4;
+    --m2b-text-secondary: #8fa79a;
+    --m2b-accent: #22c55e;
+    --m2b-accent-hover: #4ade80;
+    --m2b-accent-link: #86efac;
+
+    /* Dark chrome — deep green, not bright */
+    --m2b-sidebar: #0a1a12;
+    --m2b-sidebar-header: #0a1a12;
+    --m2b-topbar: #0a1a12;
+    --m2b-chrome-border: #16281f;
+    --m2b-chrome-text: #f0fdf4;
+    --m2b-chrome-muted: #8fa79a;
+    --m2b-chrome-hover: rgb(255 255 255 / 0.05);
+    --m2b-chrome-active-bg: rgba(34, 197, 94, 0.14);
+    --m2b-chrome-active-text: #86efac;
+    --m2b-chrome-active-icon: #4ade80;
+}
+
+.fi-body,
+.fi-simple-layout,
+.fi-sidebar,
+.fi-main {
+    font-family: var(--m2b-font);
+    font-size: var(--m2b-body-size);
+}
+
+.fi-body,
+.fi-main-ctn {
+    background-color: var(--m2b-page);
+}
+
+.dark .fi-body,
+.dark .fi-layout,
+.dark .fi-main-ctn,
+.dark .fi-main,
+.dark.fi-body,
+html.dark,
+html.dark body {
+    background-color: var(--m2b-page) !important;
+    color: var(--m2b-text);
+}
+
+.dark .fi-header-heading {
+    color: var(--m2b-text) !important;
+}
+
+.dark .fi-header-subheading {
+    color: var(--m2b-text-secondary) !important;
+}
+
+/*
+ |--------------------------------------------------------------------------
+ | Sidebar + topbar
+ |--------------------------------------------------------------------------
+ */
+
+.fi-sidebar,
+.fi-sidebar.fi-sidebar-open,
+aside.fi-sidebar {
+    background-color: var(--m2b-sidebar) !important;
+    background-image: none !important;
+}
+
+.dark .fi-sidebar,
+.dark .fi-sidebar.fi-sidebar-open,
+.dark aside.fi-sidebar {
+    border-inline-end: 1px solid var(--m2b-chrome-border) !important;
+}
+
+.fi-sidebar-header {
+    background-color: var(--m2b-sidebar-header) !important;
+    border-bottom: 1px solid var(--m2b-chrome-border) !important;
+    box-shadow: none !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-color: transparent !important;
+}
+
+.fi-sidebar .fi-logo,
+.fi-topbar .fi-logo,
+.fi-sidebar .fi-logo span,
+.fi-topbar .fi-logo span {
+    color: var(--m2b-chrome-text) !important;
+    font-weight: 600;
+}
+
+.fi-sidebar-header .fi-logo {
+    width: auto;
+    max-width: 14rem;
+    height: 2.25rem !important;
+}
+
+.fi-sidebar-header .fi-logo img {
+    object-fit: contain;
+    object-position: left center;
+}
+
+/*
+ |--------------------------------------------------------------------------
+ | Light mode shell polish only (html:not(.dark)) — dark mode untouched
+ |--------------------------------------------------------------------------
+ */
+
+html:not(.dark) .fi-sidebar,
+html:not(.dark) .fi-sidebar.fi-sidebar-open,
+html:not(.dark) aside.fi-sidebar {
+    background-color: #166534 !important;
+    border-inline-end: 1px solid rgba(255, 255, 255, 0.10) !important;
+}
+
+html:not(.dark) .fi-sidebar-header {
+    background-color: #166534 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
+}
+
+html:not(.dark) .fi-topbar,
+html:not(.dark) .fi-topbar > nav {
+    background-color: #166534 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
+    box-shadow: none !important;
+}
+
+html:not(.dark) .fi-sidebar-item-button {
+    color: rgba(255, 255, 255, 0.80) !important;
+    border-radius: 0.5rem !important;
+}
+
+html:not(.dark) .fi-sidebar-item-icon,
+html:not(.dark) .fi-sidebar-item-label {
+    color: rgba(255, 255, 255, 0.80) !important;
+}
+
+html:not(.dark) .fi-sidebar-item-button:hover,
+html:not(.dark) .fi-sidebar-item-button:focus-visible {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html:not(.dark) .fi-sidebar-item.fi-active > .fi-sidebar-item-button,
+html:not(.dark) .fi-sidebar-item-active > .fi-sidebar-item-button {
+    background-color: rgba(255, 255, 255, 0.16) !important;
+    color: #ffffff !important;
+    border-radius: 0.5rem !important;
+}
+
+html:not(.dark) .fi-sidebar-item.fi-active .fi-sidebar-item-label,
+html:not(.dark) .fi-sidebar-item-active .fi-sidebar-item-label,
+html:not(.dark) .fi-sidebar-item.fi-active .fi-sidebar-item-icon,
+html:not(.dark) .fi-sidebar-item-active .fi-sidebar-item-icon {
+    color: #ffffff !important;
+}
+
+html:not(.dark) .fi-topbar .fi-icon-btn,
+html:not(.dark) .fi-topbar .fi-icon-btn svg,
+html:not(.dark) .fi-sidebar-header .fi-icon-btn,
+html:not(.dark) .fi-sidebar-header .fi-icon-btn svg {
+    color: rgba(255, 255, 255, 0.80) !important;
+}
+
+html:not(.dark) .fi-topbar .fi-icon-btn:hover,
+html:not(.dark) .fi-sidebar-header .fi-icon-btn:hover {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Light brand: white wordmark + icon on white tile */
+html:not(.dark) .m2b-brand-light {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    height: 2.25rem;
+}
+
+html:not(.dark) .m2b-brand-mark-tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    border-radius: 0.5rem;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+html:not(.dark) .m2b-brand-mark-img {
+    width: 1.15rem;
+    height: 1.15rem;
+    display: block;
+}
+
+html:not(.dark) .m2b-brand-word {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+html:not(.dark) .m2b-brand-m2b,
+html:not(.dark) .m2b-brand-ledger {
+    color: #ffffff;
+}
+
+/* Avatar: frosted white on green + white initials (WCAG AA on #166534) */
+html:not(.dark) .fi-topbar .fi-user-avatar,
+html:not(.dark) .fi-topbar .fi-avatar {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.20);
+    opacity: 1;
+}
+
+.fi-sidebar-nav {
+    background-color: transparent;
+}
+
+.fi-sidebar-item-button {
+    color: var(--m2b-chrome-text) !important;
+    border-radius: 0.5rem !important;
+}
+
+.fi-sidebar-item-button:hover,
+.fi-sidebar-item-button:focus-visible {
+    background-color: var(--m2b-chrome-hover) !important;
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-button,
+.fi-sidebar-item-active > .fi-sidebar-item-button {
+    background-color: var(--m2b-chrome-active-bg) !important;
+    color: var(--m2b-chrome-active-text) !important;
+    border-radius: 0.5rem !important;
+}
+
+.fi-sidebar-item-icon,
+.fi-sidebar-item-label {
+    color: var(--m2b-chrome-muted) !important;
+}
+
+.fi-sidebar-item.fi-active .fi-sidebar-item-label,
+.fi-sidebar-item-active .fi-sidebar-item-label {
+    color: var(--m2b-chrome-active-text) !important;
+}
+
+.fi-sidebar-item.fi-active .fi-sidebar-item-icon,
+.fi-sidebar-item-active .fi-sidebar-item-icon {
+    color: var(--m2b-chrome-active-icon) !important;
+}
+
+.fi-sidebar-group-label,
+.fi-sidebar-group-button {
+    color: var(--m2b-chrome-muted) !important;
+}
+
+.fi-topbar,
+.fi-topbar > nav {
+    background-color: var(--m2b-topbar) !important;
+    border-bottom: 1px solid var(--m2b-chrome-border) !important;
+    box-shadow: none !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-color: transparent !important;
+}
+
+.fi-topbar .fi-icon-btn,
+.fi-topbar .fi-icon-btn svg {
+    color: var(--m2b-chrome-text) !important;
+}
+
+.fi-topbar .fi-icon-btn:hover {
+    background-color: var(--m2b-chrome-hover) !important;
+}
+
+.fi-topbar .fi-user-menu > .fi-dropdown-trigger button {
+    color: var(--m2b-chrome-text);
+}
+
+/* Avatar — green tile with light initials (provider + CSS fallback) */
+.fi-user-avatar,
+.fi-avatar.fi-user-avatar {
+    background-color: #14532d !important;
+    box-shadow: 0 0 0 1px var(--m2b-chrome-border);
+}
+
+/*
+ |--------------------------------------------------------------------------
+ | Dark mode accents (small surfaces only)
+ |--------------------------------------------------------------------------
+ */
+
+.dark .fi-btn-color-primary {
+    background-color: var(--m2b-accent) !important;
+    color: #052e16 !important;
+}
+
+.dark .fi-btn-color-primary:hover {
+    background-color: var(--m2b-accent-hover) !important;
+}
+
+.dark a.fi-link,
+.dark .fi-link {
+    color: var(--m2b-accent-link) !important;
+}
+
+.dark .fi-section,
+.dark .fi-wi-stats-overview-stat,
+.dark .fi-ta-ctn {
+    background-color: var(--m2b-card) !important;
+    border-color: var(--m2b-border) !important;
+    box-shadow: var(--m2b-shadow);
+}
+
+/*
+ |--------------------------------------------------------------------------
+ | Dropdowns
+ |--------------------------------------------------------------------------
+ */
+
+.fi-dropdown-panel,
+.fi-user-menu .fi-dropdown-panel {
+    color: #111827 !important;
+}
+
+.fi-dropdown-panel .fi-dropdown-list-item,
+.fi-dropdown-panel .fi-dropdown-list-item-label,
+.fi-dropdown-panel .fi-dropdown-header,
+.fi-dropdown-panel .fi-dropdown-header-label,
+.fi-dropdown-panel .fi-dropdown-list-item-icon,
+.fi-dropdown-panel .fi-dropdown-header-icon {
+    color: #374151 !important;
+}
+
+.fi-dropdown-panel .fi-dropdown-list-item:hover,
+.fi-dropdown-panel .fi-dropdown-list-item:focus-visible {
+    background-color: #f3f4f6 !important;
+}
+
+.dark .fi-dropdown-panel,
+.dark .fi-user-menu .fi-dropdown-panel {
+    background-color: var(--m2b-card) !important;
+    border-color: var(--m2b-border) !important;
+    color: var(--m2b-text) !important;
+    box-shadow: var(--m2b-shadow);
+}
+
+.dark .fi-dropdown-panel .fi-dropdown-list-item,
+.dark .fi-dropdown-panel .fi-dropdown-list-item-label,
+.dark .fi-dropdown-panel .fi-dropdown-header,
+.dark .fi-dropdown-panel .fi-dropdown-header-label,
+.dark .fi-dropdown-panel .fi-dropdown-list-item-icon,
+.dark .fi-dropdown-panel .fi-dropdown-header-icon {
+    color: var(--m2b-text-secondary) !important;
+}
+
+.dark .fi-dropdown-panel .fi-dropdown-list-item:hover,
+.dark .fi-dropdown-panel .fi-dropdown-list-item:focus-visible {
+    background-color: rgb(255 255 255 / 0.05) !important;
+    color: var(--m2b-text) !important;
+}
+
+.fi-dropdown-panel .fi-theme-switcher,
+.fi-dropdown-panel .fi-theme-switcher button,
+.fi-dropdown-panel .fi-theme-switcher span {
+    color: #374151 !important;
+}
+
+.dark .fi-dropdown-panel .fi-theme-switcher,
+.dark .fi-dropdown-panel .fi-theme-switcher button,
+.dark .fi-dropdown-panel .fi-theme-switcher span {
+    color: var(--m2b-text-secondary) !important;
+}
+
+/*
+ |--------------------------------------------------------------------------
+ | Login
+ |--------------------------------------------------------------------------
+ */
+
+.fi-simple-layout {
+    background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, var(--m2b-green-100), transparent 60%),
+        linear-gradient(180deg, var(--m2b-green-50) 0%, #f9fafb 48%, #f3f4f6 100%);
+}
+
+.dark .fi-simple-layout {
+    background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgb(34 197 94 / 0.12), transparent 55%),
+        linear-gradient(180deg, #0a1a12 0%, #060d0a 55%, #040a07 100%);
+}
+
+.fi-simple-main {
+    border: 1px solid var(--m2b-border);
+    border-radius: var(--m2b-radius);
+    box-shadow: var(--m2b-shadow);
+}
+
+.dark .fi-simple-main {
+    background-color: var(--m2b-card) !important;
+}
+
+.m2b-login-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.m2b-login-mark {
+    height: 3.5rem;
+    width: 3.5rem;
+}
+
+.m2b-login-name {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--m2b-green-900);
+}
+
+.dark .m2b-login-name {
+    color: var(--m2b-green-50);
+}
+
+.m2b-login-tagline {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.dark .m2b-login-tagline {
+    color: var(--m2b-text-secondary);
+}
+
+.m2b-login-form {
+    margin-top: 2rem;
+}
+
+.m2b-quick-login {
+    margin-top: 0.75rem;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    color: #374151;
+    border-radius: var(--m2b-radius);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.05);
+}
+
+.m2b-quick-login:hover {
+    background: #f9fafb;
+}
+
+.dark .m2b-quick-login {
+    border-color: var(--m2b-border);
+    background: transparent;
+    color: var(--m2b-text-secondary);
+}
+
+.dark .m2b-quick-login:hover {
+    background: rgb(255 255 255 / 0.05);
+    color: var(--m2b-text);
+}
+
+.m2b-quick-login-icon {
+    height: 1rem;
+    width: 1rem;
+}
+
+/*
+ |--------------------------------------------------------------------------
+ | Empty dashboard card
+ |--------------------------------------------------------------------------
+ */
+
+.m2b-empty-card {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 3rem 2rem;
+    text-align: center;
+    background-color: var(--m2b-card);
+    border: 1px solid var(--m2b-border);
+    border-radius: var(--m2b-radius);
+    box-shadow: var(--m2b-shadow);
+}
+
+.m2b-empty-icon {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    height: 3.5rem;
+    width: 3.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background-color: var(--m2b-green-100);
+    color: var(--m2b-green-700);
+}
+
+.dark .m2b-empty-icon {
+    background-color: rgba(34, 197, 94, 0.14);
+    color: var(--m2b-green-400);
+}
+
+.m2b-empty-icon svg {
+    height: 1.75rem;
+    width: 1.75rem;
+}
+
+.m2b-empty-title {
+    margin-top: 1.25rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.dark .m2b-empty-title {
+    color: var(--m2b-text);
+}
+
+.m2b-empty-text {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #6b7280;
+}
+
+.dark .m2b-empty-text {
+    color: var(--m2b-text-secondary);
+}

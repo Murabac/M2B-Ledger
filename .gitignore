@@ -1,0 +1,17 @@
+.DS_Store
+Thumbs.db
+.env
+.env.backup
+.env.production
+*.log
+.idea/
+.vscode/
+.zed/
+**/node_modules/
+**/vendor/
+**/tools/tw3/node_modules/
+.phpunit.result.cache
+**/.phpunit.cache/
+**/storage/*.key
+**/public/hot
+**/public/storage
