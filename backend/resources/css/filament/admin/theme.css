@@ -341,11 +341,11 @@ html:not(.dark) .fi-topbar .fi-avatar {
     color: var(--m2b-chrome-text);
 }
 
-/* Avatar — green tile with light initials (provider + CSS fallback) */
+/* Avatar — initials SVG from GreenTintAvatarProvider (unique bg per user) */
 .fi-user-avatar,
 .fi-avatar.fi-user-avatar {
-    background-color: #14532d !important;
     box-shadow: 0 0 0 1px var(--m2b-chrome-border);
+    background-color: transparent !important;
 }
 
 /*
@@ -602,3 +602,897 @@ html:not(.dark) .fi-topbar .fi-avatar {
 .dark .m2b-empty-text {
     color: var(--m2b-text-secondary);
 }
+
+/*
+ |--------------------------------------------------------------------------
+ | Resource pages — layout, tables, forms
+ | Tokens also documented in /docs/DESIGN.md
+ |--------------------------------------------------------------------------
+ */
+
+:root {
+    --m2b-content-max: 80rem; /* max-w-7xl */
+    --m2b-form-max: 60rem; /* 960px */
+    --m2b-page-gap: 2rem; /* 32px */
+    --m2b-title-size: 1.625rem; /* 26px */
+    --m2b-title-weight: 600;
+    --m2b-breadcrumb-size: 0.8125rem;
+    --m2b-table-radius: 0.75rem; /* rounded-xl */
+    --m2b-table-border: 1px solid var(--m2b-border);
+    --m2b-table-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 4px 16px rgb(15 23 42 / 0.04);
+    /* Light table chrome — solid green header/footer (sidebar match) */
+    --m2b-table-header-bg: #166534;
+    --m2b-table-header-size: 0.75rem;
+    --m2b-table-header-weight: 500;
+    --m2b-table-header-tracking: 0.04em;
+    --m2b-table-header-color: #ffffff;
+    --m2b-table-header-sort: rgba(255, 255, 255, 0.85);
+    --m2b-table-header-border: rgba(255, 255, 255, 0.12);
+    --m2b-table-toolbar-bg: #ffffff;
+    --m2b-table-toolbar-border: #dcfce7;
+    --m2b-table-toolbar-icon: #6b7280;
+    --m2b-table-footer-bg: #166534;
+    --m2b-table-footer-color: rgba(255, 255, 255, 0.9);
+    --m2b-table-footer-select-bg: #ffffff;
+    --m2b-table-footer-control-text: #111827;
+    --m2b-table-footer-active-text: #166534; /* green-800 */
+    --m2b-table-row-min: 3.5rem; /* 56px */
+    --m2b-table-row-hover: rgb(240 253 244 / 0.60); /* green-50 @ 60% */
+    --m2b-table-divider: #e5e7eb;
+    --m2b-breadcrumb-color: #6b7280;
+    --m2b-input-height: 2.5rem; /* 40px */
+    --m2b-input-radius: 0.5rem; /* rounded-lg */
+    --m2b-input-border: #d1d5db; /* gray-300 */
+    --m2b-input-bg: #ffffff;
+    --m2b-input-focus-border: #22c55e;
+    --m2b-input-focus-ring: rgb(34 197 94 / 0.20);
+    --m2b-input-disabled-bg: #f9fafb;
+    --m2b-section-gap: 1.5rem; /* 24px */
+    --m2b-section-pad: 1.5rem; /* 24px */
+    --m2b-label-size: 0.875rem;
+    --m2b-label-weight: 500;
+    --m2b-helper-size: 0.8125rem;
+    --m2b-helper-color: #6b7280;
+    --m2b-required: #fca5a5; /* muted red */
+    --m2b-sticky-bg: rgb(255 255 255 / 0.90);
+    --m2b-sticky-bar-height: 4.5rem;
+    --m2b-identity-avatar-bg: #dcfce7;
+    --m2b-identity-avatar-fg: #14532d;
+}
+
+.dark {
+    --m2b-table-shadow: 0 1px 2px rgb(0 0 0 / 0.35), 0 8px 24px rgb(0 0 0 / 0.22);
+    --m2b-table-header-bg: #0f1f17;
+    --m2b-table-header-color: #86efac;
+    --m2b-table-header-sort: #86efac;
+    --m2b-table-header-border: #1a2b22;
+    --m2b-table-toolbar-bg: #0d1813;
+    --m2b-table-toolbar-border: #1a2b22;
+    --m2b-table-toolbar-icon: #8fa79a;
+    --m2b-table-footer-bg: #0f1f17;
+    --m2b-table-footer-color: #8fa79a;
+    --m2b-table-footer-select-bg: #0d1813;
+    --m2b-table-footer-control-text: #f0fdf4;
+    --m2b-table-footer-active-text: #86efac;
+    --m2b-table-row-hover: rgba(34, 197, 94, 0.06);
+    --m2b-table-divider: #1a2b22;
+    --m2b-breadcrumb-color: #8fa79a;
+    --m2b-input-border: #1f3328;
+    --m2b-input-bg: #0a1410;
+    --m2b-input-disabled-bg: #0a1611;
+    --m2b-helper-color: #8fa79a;
+    --m2b-required: #f87171;
+    --m2b-sticky-bg: rgb(13 24 19 / 0.92);
+    --m2b-identity-avatar-bg: rgba(34, 197, 94, 0.14);
+    --m2b-identity-avatar-fg: #86efac;
+}
+
+/* Page shell: centered max-w-7xl + 32px vertical rhythm */
+.fi-page > section,
+.fi-resource-list-records-page > section,
+.fi-resource-create-record-page > section,
+.fi-resource-edit-record-page > section,
+.fi-resource-view-record-page > section {
+    max-width: var(--m2b-content-max);
+    margin-inline: auto;
+    width: 100%;
+}
+
+.fi-header {
+    margin-bottom: 1rem !important; /* 16px under title → table */
+    gap: 0.5rem !important;
+}
+
+.fi-header-heading {
+    font-size: var(--m2b-title-size) !important;
+    font-weight: var(--m2b-title-weight) !important;
+    letter-spacing: -0.02em;
+    line-height: 1.25 !important;
+}
+
+.fi-breadcrumbs,
+.fi-breadcrumbs ol,
+.fi-breadcrumbs li,
+.fi-breadcrumbs a,
+.fi-breadcrumbs span {
+    font-size: var(--m2b-breadcrumb-size) !important;
+    font-weight: 400 !important;
+    color: var(--m2b-breadcrumb-color) !important;
+}
+
+.fi-page > section > .fi-main,
+.fi-page .fi-ta-ctn,
+.fi-resource-list-records-page .fi-ta-ctn {
+    margin-top: 0 !important;
+}
+
+/* List pages: no stacked gap under the title */
+.fi-resource-list-records-page .fi-header {
+    margin-bottom: 1rem !important;
+}
+
+.fi-resource-list-records-page .fi-header + *,
+.fi-resource-list-records-page .fi-ta-ctn {
+    margin-top: 0 !important;
+}
+
+/* Table card — overflow clips green header/footer to rounded-xl */
+.fi-ta-ctn {
+    border-radius: var(--m2b-table-radius) !important;
+    border: var(--m2b-table-border) !important;
+    box-shadow: var(--m2b-table-shadow) !important;
+    overflow: hidden !important;
+    background-color: var(--m2b-card) !important;
+}
+
+/* Toolbar (search / filters / column toggle) — white under green header */
+.fi-ta-header-toolbar {
+    background-color: var(--m2b-table-toolbar-bg) !important;
+    border-bottom: 1px solid var(--m2b-table-toolbar-border) !important;
+}
+
+.fi-ta-header-toolbar .fi-ta-search-field {
+    order: -1;
+}
+
+.fi-ta-search-field input,
+.fi-ta-search-field .fi-input {
+    min-height: var(--m2b-input-height);
+    border-radius: var(--m2b-input-radius) !important;
+}
+
+.fi-ta-header-toolbar .fi-ac-btn-group .fi-icon-btn,
+.fi-ta-header-toolbar .fi-icon-btn,
+.fi-ta-header-toolbar .fi-icon-btn svg,
+.fi-ta-col-toggle .fi-icon-btn,
+.fi-ta-col-toggle .fi-icon-btn svg {
+    color: var(--m2b-table-toolbar-icon) !important;
+}
+
+/* Column header + footer (token-driven; light = solid green, dark overridden above) */
+.fi-ta-table thead,
+.fi-ta-header-cell,
+.fi-ta-table thead th {
+    background-color: var(--m2b-table-header-bg) !important;
+    color: var(--m2b-table-header-color) !important;
+    font-size: var(--m2b-table-header-size) !important;
+    font-weight: var(--m2b-table-header-weight) !important;
+    letter-spacing: var(--m2b-table-header-tracking) !important;
+    text-transform: uppercase !important;
+    border-bottom: 1px solid var(--m2b-table-header-border) !important;
+}
+
+.fi-ta-table tfoot,
+.fi-ta-table tfoot td {
+    background-color: var(--m2b-table-footer-bg) !important;
+    border-color: var(--m2b-table-header-border) !important;
+    color: var(--m2b-table-footer-color) !important;
+}
+
+.fi-ta-header-cell-label,
+.fi-ta-header-cell span,
+.fi-ta-header-cell button {
+    font-size: var(--m2b-table-header-size) !important;
+    font-weight: var(--m2b-table-header-weight) !important;
+    letter-spacing: var(--m2b-table-header-tracking) !important;
+    color: var(--m2b-table-header-color) !important;
+}
+
+.fi-ta-header-cell .fi-ta-header-cell-sort-icon,
+.fi-ta-header-cell button .fi-ta-header-cell-sort-icon {
+    color: var(--m2b-table-header-sort) !important;
+}
+
+.fi-ta-header-cell button:hover,
+.fi-ta-header-cell button:hover .fi-ta-header-cell-label,
+.fi-ta-header-cell button:hover .fi-ta-header-cell-sort-icon,
+.fi-ta-header-cell button:hover span {
+    color: var(--m2b-table-header-color) !important;
+    opacity: 1;
+}
+
+/* Body rows */
+.fi-ta-row > td,
+.fi-ta-cell {
+    min-height: var(--m2b-table-row-min);
+    padding-top: 0.875rem !important;
+    padding-bottom: 0.875rem !important;
+    border-bottom: 1px solid var(--m2b-table-divider) !important;
+    vertical-align: middle !important;
+}
+
+.fi-ta-row:last-child > td,
+.fi-ta-row:last-child .fi-ta-cell {
+    border-bottom: none !important;
+}
+
+.fi-ta-row:hover > td,
+.fi-ta-row:hover .fi-ta-cell,
+tr.fi-ta-row:hover {
+    background-color: var(--m2b-table-row-hover) !important;
+}
+
+.dark .fi-ta-row:hover > td,
+.dark .fi-ta-row:hover .fi-ta-cell,
+.dark tr.fi-ta-row:hover {
+    background-color: rgba(34, 197, 94, 0.06) !important;
+}
+
+/* Pagination footer */
+.fi-ta-pagination,
+.fi-ta-ctn > .fi-pagination,
+.fi-ta-ctn .fi-ta-pagination {
+    background-color: var(--m2b-table-footer-bg) !important;
+    border-top: 1px solid var(--m2b-table-header-border) !important;
+    color: var(--m2b-table-footer-color) !important;
+}
+
+.fi-ta-pagination .fi-pagination-overview,
+.fi-ta-pagination .fi-pagination-records-per-page-label,
+.fi-ta-pagination .fi-pagination-overview *,
+.fi-ta-pagination > span,
+.fi-ta-pagination > p {
+    color: var(--m2b-table-footer-color) !important;
+}
+
+.fi-ta-pagination .fi-input-wrp,
+.fi-ta-pagination select,
+.fi-ta-pagination .fi-select-input,
+.fi-ta-pagination .fi-pagination-records-per-page-select .fi-input-wrp {
+    background-color: var(--m2b-table-footer-select-bg) !important;
+    color: var(--m2b-table-footer-control-text) !important;
+}
+
+.fi-ta-pagination .fi-pagination-records-per-page-select .fi-input-wrp,
+.fi-ta-pagination .fi-pagination-records-per-page-select .fi-input-wrp *,
+.fi-ta-pagination .fi-pagination-records-per-page-select select,
+.fi-ta-pagination .fi-pagination-records-per-page-select .fi-select-input,
+.fi-ta-pagination .fi-pagination-records-per-page-select .fi-input-wrp-prefix,
+.fi-ta-pagination .fi-pagination-records-per-page-select .fi-input-wrp-suffix {
+    color: var(--m2b-table-footer-control-text) !important;
+}
+
+/*
+ |--------------------------------------------------------------------------
+ | Light mode only — solid green table chrome (sidebar #166534)
+ | Dark mode keeps the token overrides above; do not mirror these rules.
+ |--------------------------------------------------------------------------
+ */
+
+html:not(.dark) .fi-ta-table thead,
+html:not(.dark) .fi-ta-header-cell,
+html:not(.dark) .fi-ta-table thead th,
+html:not(.dark) .fi-ta-table tfoot,
+html:not(.dark) .fi-ta-table tfoot td,
+html:not(.dark) .fi-ta-pagination,
+html:not(.dark) .fi-ta-ctn .fi-ta-pagination {
+    background-color: #166534 !important;
+    background-image: none !important;
+}
+
+html:not(.dark) .fi-ta-header-cell,
+html:not(.dark) .fi-ta-table thead th {
+    color: #ffffff !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+html:not(.dark) .fi-ta-header-cell-label,
+html:not(.dark) .fi-ta-header-cell span,
+html:not(.dark) .fi-ta-header-cell button {
+    color: #ffffff !important;
+}
+
+html:not(.dark) .fi-ta-header-cell .fi-ta-header-cell-sort-icon,
+html:not(.dark) .fi-ta-header-cell button {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+html:not(.dark) .fi-ta-header-cell button:hover,
+html:not(.dark) .fi-ta-header-cell button:hover .fi-ta-header-cell-label,
+html:not(.dark) .fi-ta-header-cell button:hover .fi-ta-header-cell-sort-icon,
+html:not(.dark) .fi-ta-header-cell button:hover span {
+    color: #ffffff !important;
+}
+
+/* Header checkbox (when bulk actions exist): white border + white check */
+html:not(.dark) .fi-ta-header-cell .fi-checkbox-input,
+html:not(.dark) .fi-ta-selection-cell .fi-checkbox-input,
+html:not(.dark) thead .fi-ta-header-cell input[type='checkbox'] {
+    border-color: rgba(255, 255, 255, 0.85) !important;
+    background-color: transparent !important;
+    color: #ffffff !important;
+}
+
+html:not(.dark) .fi-ta-header-cell .fi-checkbox-input:checked,
+html:not(.dark) thead .fi-ta-header-cell input[type='checkbox']:checked {
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+    color: #166534 !important;
+}
+
+html:not(.dark) .fi-ta-header-toolbar {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #dcfce7 !important;
+}
+
+html:not(.dark) .fi-ta-pagination {
+    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+html:not(.dark) .fi-ta-pagination .fi-pagination-overview,
+html:not(.dark) .fi-ta-pagination .fi-pagination-records-per-page-label {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Per-page select: white surface; "Per page" prefix + value are dark (not footer white) */
+html:not(.dark) .fi-ta-pagination .fi-pagination-records-per-page-select .fi-input-wrp,
+html:not(.dark) .fi-ta-pagination .fi-pagination-records-per-page-select select,
+html:not(.dark) .fi-ta-pagination .fi-input-wrp {
+    background-color: #ffffff !important;
+    border-color: #d1d5db !important;
+    color: #111827 !important;
+    box-shadow: none !important;
+}
+
+html:not(.dark) .fi-ta-pagination .fi-pagination-records-per-page-select .fi-input-wrp *,
+html:not(.dark) .fi-ta-pagination .fi-pagination-records-per-page-select .fi-input-wrp-prefix,
+html:not(.dark) .fi-ta-pagination .fi-pagination-records-per-page-select .fi-input-wrp-suffix,
+html:not(.dark) .fi-ta-pagination .fi-pagination-records-per-page-select .fi-input-wrp-prefix *,
+html:not(.dark) .fi-ta-pagination .fi-pagination-records-per-page-select .fi-input-wrp-label,
+html:not(.dark) .fi-ta-pagination .fi-pagination-records-per-page-select select,
+html:not(.dark) .fi-ta-pagination .fi-pagination-records-per-page-select .fi-select-input,
+html:not(.dark) .fi-ta-pagination .fi-input-wrp .fi-input-wrp-prefix,
+html:not(.dark) .fi-ta-pagination .fi-input-wrp .fi-input-wrp-prefix span,
+html:not(.dark) .fi-ta-pagination .fi-input-wrp .fi-input-wrp-label,
+html:not(.dark) .fi-ta-pagination .fi-input-wrp select {
+    color: #111827 !important;
+}
+
+html:not(.dark) .fi-ta-pagination .fi-pagination-items {
+    background-color: #ffffff !important;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.06) !important;
+    ring-color: transparent !important;
+}
+
+html:not(.dark) .fi-ta-pagination .fi-pagination-item,
+html:not(.dark) .fi-ta-pagination .fi-pagination-item-button,
+html:not(.dark) .fi-ta-pagination .fi-pagination-item-label,
+html:not(.dark) .fi-ta-pagination .fi-pagination-previous-btn,
+html:not(.dark) .fi-ta-pagination .fi-pagination-next-btn,
+html:not(.dark) .fi-ta-pagination .fi-btn,
+html:not(.dark) .fi-ta-pagination .fi-icon-btn,
+html:not(.dark) .fi-ta-pagination .fi-icon-btn svg {
+    color: #111827 !important;
+    background-color: #ffffff !important;
+}
+
+html:not(.dark) .fi-ta-pagination .fi-pagination-item-button,
+html:not(.dark) .fi-ta-pagination .fi-pagination-previous-btn,
+html:not(.dark) .fi-ta-pagination .fi-pagination-next-btn {
+    border-color: #e5e7eb !important;
+}
+
+/* Active page: white with green-800 text */
+html:not(.dark) .fi-ta-pagination .fi-pagination-item-button[aria-current='page'],
+html:not(.dark) .fi-ta-pagination .fi-pagination-item-button[aria-current='page'] .fi-pagination-item-label,
+html:not(.dark) .fi-ta-pagination .fi-pagination-item[aria-current='page'] .fi-pagination-item-button,
+html:not(.dark) .fi-ta-pagination .fi-pagination-item[aria-current='page'] .fi-pagination-item-label {
+    background-color: #ffffff !important;
+    color: #166534 !important;
+    font-weight: 600 !important;
+}
+
+/* Kill leftover pale green / gray header-footer fills in light mode */
+html:not(.dark) .fi-ta-table thead,
+html:not(.dark) .fi-ta-table tfoot,
+html:not(.dark) .fi-ta-pagination,
+html:not(.dark) .fi-ta-selection-indicator {
+    background-color: #166534 !important;
+    background-image: none !important;
+}
+
+html:not(.dark) .fi-ta-selection-indicator {
+    color: rgba(255, 255, 255, 0.9) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Hide selection checkboxes when no bulk actions (Filament still may reserve space) */
+.fi-ta-ctn:not(:has(.fi-ta-bulk-actions)) .fi-ta-selection-cell,
+.fi-ta-ctn:not(:has(.fi-ta-bulk-actions)) .fi-ta-header-cell.fi-ta-selection-cell,
+.fi-ta-table:not(:has(.fi-ta-bulk-actions-panel)) thead .fi-ta-header-cell:has(input[type='checkbox']),
+.fi-ta-table tbody .fi-ta-cell:has(> input[type='checkbox']),
+.fi-ta-selection-indicator:empty {
+    display: none !important;
+}
+
+/* When bulk actions array is empty Filament omits checkbox column — keep CSS as safety */
+
+/* Identity cell */
+.m2b-identity {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.m2b-identity-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: #ffffff;
+    background-color: #14532d;
+    box-shadow: 0 0 0 1px rgb(15 23 42 / 0.06);
+    user-select: none;
+}
+
+.m2b-avatar-bg-0 { background-color: #14532d !important; }
+.m2b-avatar-user { background-color: #14532d !important; }
+.m2b-avatar-bg-1 { background-color: #047857 !important; }
+.m2b-avatar-bg-2 { background-color: #0f766e !important; }
+.m2b-avatar-bg-3 { background-color: #0e7490 !important; }
+.m2b-avatar-bg-4 { background-color: #0369a1 !important; }
+.m2b-avatar-bg-5 { background-color: #1d4ed8 !important; }
+.m2b-avatar-bg-6 { background-color: #4338ca !important; }
+.m2b-avatar-bg-7 { background-color: #6d28d9 !important; }
+.m2b-avatar-bg-8 { background-color: #be185d !important; }
+.m2b-avatar-bg-9 { background-color: #b91c1c !important; }
+.m2b-avatar-bg-10 { background-color: #c2410c !important; }
+.m2b-avatar-bg-11 { background-color: #b45309 !important; }
+.m2b-avatar-bg-12 { background-color: #4d7c0f !important; }
+.m2b-avatar-bg-13 { background-color: #334155 !important; }
+.m2b-avatar-bg-14 { background-color: #3f6212 !important; }
+.m2b-avatar-bg-15 { background-color: #115e59 !important; }
+
+.m2b-identity-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
+}
+
+.m2b-identity-name {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #111827;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dark .m2b-identity-name {
+    color: var(--m2b-text);
+}
+
+.m2b-identity-desc {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--m2b-helper-color);
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Role badges — soft harmonious palette */
+.m2b-role-badge.fi-badge,
+.fi-badge.m2b-role-admin,
+.fi-badge.m2b-role-owner,
+.fi-badge.m2b-role-collections,
+.fi-badge.m2b-role-sales_rep {
+    border-radius: 9999px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+.m2b-role-admin.fi-badge,
+.fi-badge.m2b-role-admin {
+    background-color: #dcfce7 !important;
+    color: #14532d !important;
+    ring-color: transparent;
+}
+
+.m2b-role-owner.fi-badge,
+.fi-badge.m2b-role-owner {
+    background-color: #ecfdf5 !important;
+    color: #047857 !important;
+}
+
+.m2b-role-collections.fi-badge,
+.fi-badge.m2b-role-collections {
+    background-color: #fffbeb !important;
+    color: #b45309 !important;
+}
+
+.m2b-role-sales_rep.fi-badge,
+.fi-badge.m2b-role-sales_rep {
+    background-color: #f0f9ff !important;
+    color: #0369a1 !important;
+}
+
+.dark .m2b-role-admin.fi-badge,
+.dark .fi-badge.m2b-role-admin {
+    background-color: rgba(20, 83, 45, 0.45) !important;
+    color: #bbf7d0 !important;
+}
+
+.dark .m2b-role-owner.fi-badge,
+.dark .fi-badge.m2b-role-owner {
+    background-color: rgba(4, 120, 87, 0.28) !important;
+    color: #6ee7b7 !important;
+}
+
+.dark .m2b-role-collections.fi-badge,
+.dark .fi-badge.m2b-role-collections {
+    background-color: rgba(180, 83, 9, 0.28) !important;
+    color: #fcd34d !important;
+}
+
+.dark .m2b-role-sales_rep.fi-badge,
+.dark .fi-badge.m2b-role-sales_rep {
+    background-color: rgba(3, 105, 161, 0.28) !important;
+    color: #7dd3fc !important;
+}
+
+/* Status dots */
+.m2b-status-dot.fi-badge {
+    border-radius: 9999px;
+    font-weight: 500;
+}
+
+.m2b-status-active.fi-badge {
+    background-color: #ecfdf5 !important;
+    color: #047857 !important;
+}
+
+.m2b-status-inactive.fi-badge {
+    background-color: #f3f4f6 !important;
+    color: #6b7280 !important;
+}
+
+.dark .m2b-status-active.fi-badge {
+    background-color: rgba(34, 197, 94, 0.14) !important;
+    color: #86efac !important;
+}
+
+.dark .m2b-status-inactive.fi-badge {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    color: #8fa79a !important;
+}
+
+/* Row action group — three-dot / Actions button with theme background */
+.fi-ta-actions .fi-ac-btn-group .fi-btn,
+.fi-ta-actions .fi-dropdown-trigger .fi-btn,
+.fi-ta-actions-cell .fi-btn,
+.fi-ta-actions-cell .fi-dropdown-trigger button {
+    border-radius: var(--m2b-input-radius) !important;
+    background-color: #ecfdf5 !important; /* emerald-50 */
+    border: 1px solid #bbf7d0 !important; /* green-200 */
+    color: #166534 !important;
+    box-shadow: none !important;
+}
+
+.fi-ta-actions .fi-ac-btn-group .fi-btn:hover,
+.fi-ta-actions .fi-dropdown-trigger .fi-btn:hover,
+.fi-ta-actions-cell .fi-btn:hover,
+.fi-ta-actions-cell .fi-dropdown-trigger button:hover {
+    background-color: #dcfce7 !important; /* green-100 */
+    border-color: #86efac !important;
+    color: #14532d !important;
+}
+
+.fi-ta-actions .fi-ac-btn-group .fi-btn svg,
+.fi-ta-actions .fi-dropdown-trigger .fi-btn svg,
+.fi-ta-actions-cell .fi-btn svg {
+    color: #166534 !important;
+}
+
+.dark .fi-ta-actions .fi-ac-btn-group .fi-btn,
+.dark .fi-ta-actions .fi-dropdown-trigger .fi-btn,
+.dark .fi-ta-actions-cell .fi-btn,
+.dark .fi-ta-actions-cell .fi-dropdown-trigger button {
+    background-color: rgba(34, 197, 94, 0.12) !important;
+    border: 1px solid rgba(34, 197, 94, 0.28) !important;
+    color: #86efac !important;
+}
+
+.dark .fi-ta-actions .fi-ac-btn-group .fi-btn:hover,
+.dark .fi-ta-actions .fi-dropdown-trigger .fi-btn:hover,
+.dark .fi-ta-actions-cell .fi-btn:hover,
+.dark .fi-ta-actions-cell .fi-dropdown-trigger button:hover {
+    background-color: rgba(34, 197, 94, 0.20) !important;
+    border-color: rgba(34, 197, 94, 0.40) !important;
+    color: #bbf7d0 !important;
+}
+
+.dark .fi-ta-actions .fi-ac-btn-group .fi-btn svg,
+.dark .fi-ta-actions .fi-dropdown-trigger .fi-btn svg,
+.dark .fi-ta-actions-cell .fi-btn svg {
+    color: #86efac !important;
+}
+
+/* Empty state */
+.fi-ta-empty-state {
+    padding: 3rem 1.5rem !important;
+}
+
+.fi-ta-empty-state-icon {
+    background-color: var(--m2b-identity-avatar-bg) !important;
+    color: var(--m2b-identity-avatar-fg) !important;
+}
+
+/* Forms — full-width section cards, restored inputs, sticky action bar */
+.fi-resource-create-record-page > section,
+.fi-resource-edit-record-page > section,
+.fi-resource-view-record-page > section {
+    max-width: var(--m2b-form-max);
+    margin-inline: auto;
+    width: 100%;
+    padding-bottom: calc(var(--m2b-sticky-bar-height) + 1.5rem) !important;
+}
+
+.fi-resource-create-record-page .fi-header,
+.fi-resource-edit-record-page .fi-header,
+.fi-resource-view-record-page .fi-header {
+    margin-bottom: 1.5rem !important; /* 24px under title */
+    gap: 0.5rem !important;
+}
+
+.fi-resource-create-record-page .fi-header-heading,
+.fi-resource-edit-record-page .fi-header-heading,
+.fi-resource-view-record-page .fi-header-heading {
+    font-size: 1.625rem !important; /* 26px */
+    font-weight: 600 !important;
+}
+
+.fi-resource-create-record-page .fi-form,
+.fi-resource-edit-record-page .fi-form,
+.fi-resource-view-record-page .fi-infolist {
+    max-width: var(--m2b-form-max);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--m2b-section-gap);
+}
+
+/* Kill aside layout leftovers */
+.fi-resource-create-record-page .fi-section.fi-section-has-aside,
+.fi-resource-edit-record-page .fi-section.fi-section-has-aside,
+.fi-section.fi-aside {
+    display: block !important;
+}
+
+.fi-section {
+    border-radius: var(--m2b-table-radius) !important; /* rounded-xl */
+    border: 1px solid #e5e7eb !important;
+    box-shadow: var(--m2b-table-shadow) !important;
+    background-color: #ffffff !important;
+    overflow: hidden;
+    margin: 0 !important;
+}
+
+.dark .fi-section {
+    background-color: #0d1813 !important;
+    border-color: #1a2b22 !important;
+}
+
+.fi-section > .fi-section-header,
+.fi-section .fi-section-header {
+    padding: var(--m2b-section-pad) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+    background-color: #166534 !important; /* match sidebar / table chrome */
+}
+
+.fi-section-header-heading,
+.fi-section .fi-section-header-heading,
+.fi-section-header .fi-section-header-heading {
+    font-size: 0.9375rem !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+}
+
+.fi-section-header-description,
+.fi-section .fi-section-header-description {
+    margin-top: 0.25rem !important;
+    font-size: var(--m2b-helper-size) !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.fi-section-header .fi-icon-btn,
+.fi-section-header .fi-icon-btn svg,
+.fi-section-header .fi-section-collapse-button,
+.fi-section-header button {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.dark .fi-section > .fi-section-header,
+.dark .fi-section .fi-section-header {
+    background-color: #0f1f17 !important; /* match dark table header */
+    border-bottom-color: #1a2b22 !important;
+}
+
+.dark .fi-section-header-heading,
+.dark .fi-section .fi-section-header-heading {
+    color: #86efac !important;
+}
+
+.dark .fi-section-header-description,
+.dark .fi-section .fi-section-header-description {
+    color: #8fa79a !important;
+}
+
+.dark .fi-section-header .fi-icon-btn,
+.dark .fi-section-header .fi-icon-btn svg,
+.dark .fi-section-header button {
+    color: #86efac !important;
+}
+
+.fi-section-content-ctn,
+.fi-section-content {
+    padding: var(--m2b-section-pad) !important;
+}
+
+.fi-fo-field-wrp {
+    gap: 0.375rem !important; /* 6px label → input */
+}
+
+.fi-fo-field-wrp-label,
+.fi-fo-field-wrp-label span,
+.fi-fo-field-wrp-label label {
+    font-size: var(--m2b-label-size) !important;
+    font-weight: var(--m2b-label-weight) !important;
+}
+
+.fi-fo-field-wrp-label .fi-fo-field-wrp-required-marker,
+.fi-fo-field-wrp-label .fi-fo-field-wrp-required-mark,
+.fi-required-marker {
+    color: var(--m2b-required) !important;
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+}
+
+.fi-fo-field-wrp-hint,
+.fi-fo-field-wrp-helper-text,
+.fi-fo-field-wrp .fi-fo-field-wrp-hint-text {
+    margin-top: 0.25rem !important;
+    font-size: var(--m2b-helper-size) !important;
+    color: var(--m2b-helper-color) !important;
+}
+
+/* Visible input boxes — restore borders (beat any transparent / border-none rules) */
+.fi-resource-create-record-page .fi-input-wrp,
+.fi-resource-edit-record-page .fi-input-wrp,
+.fi-fo-field-wrp .fi-input-wrp,
+.fi-fo-text-input .fi-input-wrp,
+.fi-fo-select .fi-input-wrp,
+.fi-fo-date-time-picker .fi-input-wrp {
+    min-height: var(--m2b-input-height) !important;
+    height: auto !important;
+    background-color: var(--m2b-input-bg) !important;
+    border: 1px solid var(--m2b-input-border) !important;
+    border-radius: var(--m2b-input-radius) !important;
+    box-shadow: none !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-color: transparent !important;
+}
+
+.fi-resource-create-record-page .fi-input-wrp input,
+.fi-resource-edit-record-page .fi-input-wrp input,
+.fi-resource-create-record-page .fi-input-wrp select,
+.fi-resource-edit-record-page .fi-input-wrp select,
+.fi-fo-field-wrp .fi-input,
+.fi-fo-field-wrp .fi-select-input,
+.fi-fo-field-wrp input.fi-input,
+.fi-fo-field-wrp select {
+    min-height: calc(var(--m2b-input-height) - 2px) !important;
+    height: calc(var(--m2b-input-height) - 2px) !important;
+    padding-inline: 0.75rem !important; /* 12px */
+    font-size: 0.875rem !important; /* 14px */
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.fi-resource-create-record-page .fi-input-wrp:focus-within,
+.fi-resource-edit-record-page .fi-input-wrp:focus-within,
+.fi-fo-field-wrp .fi-input-wrp:focus-within {
+    border-color: var(--m2b-input-focus-border) !important;
+    box-shadow: 0 0 0 3px var(--m2b-input-focus-ring) !important;
+}
+
+.fi-resource-create-record-page .fi-input-wrp:has(input:disabled),
+.fi-resource-edit-record-page .fi-input-wrp:has(input:disabled),
+.fi-resource-create-record-page .fi-input-wrp:has(select:disabled),
+.fi-resource-edit-record-page .fi-input-wrp:has(select:disabled),
+.fi-fo-field-wrp .fi-input-wrp:has(:disabled) {
+    background-color: var(--m2b-input-disabled-bg) !important;
+}
+
+/* Sticky action bar — content column only, does not cover fields */
+.fi-resource-create-record-page .fi-form-actions,
+.fi-resource-edit-record-page .fi-form-actions,
+.fi-form-actions.fi-sticky {
+    position: sticky !important;
+    bottom: 0 !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    max-width: var(--m2b-form-max) !important;
+    z-index: 20;
+    margin-top: 1.5rem !important;
+    margin-inline: 0 !important;
+    padding: 1rem 0 !important; /* 16px vertical */
+    background: var(--m2b-sticky-bg) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--m2b-border) !important;
+    box-shadow: none !important;
+}
+
+.fi-form-actions .fi-btn-color-primary {
+    background-color: var(--m2b-green-600) !important;
+    color: #ffffff !important;
+}
+
+.fi-form-actions .fi-btn-color-primary:hover {
+    background-color: var(--m2b-green-500) !important;
+}
+
+.fi-form-actions .fi-btn-color-gray {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Secondary delete in header */
+.fi-header-actions .fi-btn-color-danger.fi-btn-outlined,
+.fi-header-actions .fi-ac-btn-group .fi-btn-outlined.fi-btn-color-danger {
+    background: transparent !important;
+    color: #dc2626 !important;
+    border-color: #fecaca !important; /* red-200 */
+    box-shadow: none !important;
+}
+
+.fi-header-actions .fi-btn-color-danger.fi-btn-outlined:hover {
+    background: #fef2f2 !important;
+    border-color: #fca5a5 !important;
+}
+
+.dark .fi-header-actions .fi-btn-color-danger.fi-btn-outlined,
+.dark .fi-header-actions .fi-ac-btn-group .fi-btn-outlined.fi-btn-color-danger {
+    color: #fca5a5 !important;
+    border-color: rgba(248, 113, 113, 0.35) !important;
+}
+
+.dark .fi-header-actions .fi-btn-color-danger.fi-btn-outlined:hover {
+    background: rgba(248, 113, 113, 0.10) !important;
+}
+

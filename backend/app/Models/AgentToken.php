@@ -38,6 +38,11 @@ class AgentToken extends Model
         return hash('sha256', $plaintext);
     }
 
+    public static function generatePlaintext(): string
+    {
+        return bin2hex(random_bytes(48));
+    }
+
     public function isRevoked(): bool
     {
         return $this->revoked_at !== null;

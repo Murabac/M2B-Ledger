@@ -124,9 +124,9 @@ Money columns: `decimal(15,2)`.
 
 **Auth**
 
-- `POST /api/login` — email + password → Sanctum token + user (role, company)
-- `POST /api/logout` — revoke current token
-- Agent: `Authorization: Bearer <AgentToken>` on `POST /api/agent/sync` (lookup hashed token, not Sanctum)
+- [x] `POST /api/login` — email + password → Sanctum token + user (role, company)
+- [x] `POST /api/logout` — revoke current token
+- [x] Agent: `Authorization: Bearer <AgentToken>` on `POST /api/agent/sync` (lookup hashed token, not Sanctum)
 
 **Endpoints**
 
@@ -172,13 +172,13 @@ Money columns: `decimal(15,2)`.
 
 **Also this wave**
 
-- Form Request validation on every endpoint
-- Rate limiting (see DECISIONS.md)
-- Policies for Account, Customer, Summary, Status
-- Artisan command `sync:check-stale` + schedule every 5 minutes: log/alert when no successful sync in 15 minutes
-- Feature tests: login/logout, agent sync upsert + inactive marking + sync_log, status stale/fresh, accounts forbidden for sales_rep, customers scoped for sales_rep, customer detail 404 for other-rep, summary key-accounts hidden from sales_rep/collections, pagination/search/sort/filter
+- [x] Form Request validation on every endpoint
+- [x] Rate limiting (see DECISIONS.md)
+- [x] Policies for Account, Customer, Summary, Status
+- [x] Artisan command `sync:check-stale` + schedule every 5 minutes: log/alert when no successful sync in 15 minutes
+- [x] Feature tests: login/logout, agent sync upsert + inactive marking + sync_log, status stale/fresh, accounts forbidden for sales_rep, customers scoped for sales_rep, customer detail 404 for other-rep, summary key-accounts hidden from sales_rep/collections, pagination/search/sort/filter
 
-**Done when:** `php artisan test` is green for every endpoint and every role rule.
+**Done when:** `php artisan test` is green for every endpoint and every role rule. **Met 2026-09-22.** `php artisan test` — 37 passed.
 
 ---
 
@@ -188,16 +188,16 @@ Money columns: `decimal(15,2)`.
 
 **Resources**
 
-- **Companies** — CRUD
-- **Users** — role, `qb_sales_rep_name` mapping, company
-- **Agent tokens** — create generates a random plaintext token, **shows it once**, stores only the hash; list view never shows plaintext
-- **Sync logs** — read-only table (status, counts, duration, error, timestamps)
+- [x] **Companies** — CRUD
+- [x] **Users** — role, `qb_sales_rep_name` mapping, company
+- [x] **Agent tokens** — create generates a random plaintext token, **shows it once**, stores only the hash; list view never shows plaintext
+- [x] **Sync logs** — read-only table (status, counts, duration, error, timestamps)
 
 **Tests**
 
-- Feature/livewire tests: token shown once on create and not persisted in plaintext; sales-rep mapping saves; sync log resource is read-only
+- [x] Feature/livewire tests: token shown once on create and not persisted in plaintext; sales-rep mapping saves; sync log resource is read-only
 
-**Done when:** Admin user can log into `/admin`, create an agent token, and see the one-time plaintext value.
+**Done when:** Admin user can log into `/admin`, create an agent token, and see the one-time plaintext value. **Met 2026-09-22.** `php artisan test` — 40 passed.
 
 ---
 

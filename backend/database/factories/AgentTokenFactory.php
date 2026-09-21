@@ -21,4 +21,18 @@ class AgentTokenFactory extends Factory
             'revoked_at' => null,
         ];
     }
+
+    public function withPlaintext(string $plaintext): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'token_hash' => AgentToken::hashToken($plaintext),
+        ]);
+    }
+
+    public function revoked(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'revoked_at' => now(),
+        ]);
+    }
 }

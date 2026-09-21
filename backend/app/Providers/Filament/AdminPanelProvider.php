@@ -43,6 +43,10 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Green,
                 'gray' => Color::Gray,
+                'admin' => Color::hex('#14532d'),
+                'owner' => Color::Emerald,
+                'collections' => Color::Amber,
+                'sales_rep' => Color::Sky,
             ])
             ->theme(asset('css/filament/admin/theme.css'))
             ->sidebarCollapsibleOnDesktop()
