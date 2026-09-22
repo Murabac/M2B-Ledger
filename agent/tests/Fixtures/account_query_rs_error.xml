@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<?qbxml version="13.0"?>
+<QBXML>
+  <QBXMLMsgsRs>
+    <AccountQueryRs statusCode="3120" statusSeverity="Error" statusMessage="Object &quot;Account&quot; specified in the request cannot be found." />
+  </QBXMLMsgsRs>
+</QBXML>

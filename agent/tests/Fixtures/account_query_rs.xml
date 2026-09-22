@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<?qbxml version="13.0"?>
+<QBXML>
+  <QBXMLMsgsRs>
+    <AccountQueryRs statusCode="0" statusSeverity="Info" statusMessage="Status OK">
+      <AccountRet>
+        <ListID>100000-1111111111</ListID>
+        <FullName>Checking</FullName>
+        <IsActive>true</IsActive>
+        <AccountType>Bank</AccountType>
+        <Balance>12450.75</Balance>
+        <TotalBalance>12450.75</TotalBalance>
+      </AccountRet>
+      <AccountRet>
+        <ListID>100000-2222222222</ListID>
+        <FullName>Accounts Receivable</FullName>
+        <IsActive>true</IsActive>
+        <AccountType>AccountsReceivable</AccountType>
+        <Balance>8430.00</Balance>
+        <TotalBalance>8430.00</TotalBalance>
+      </AccountRet>
+      <AccountRet>
+        <ListID>100000-3333333333</ListID>
+        <FullName>Sales</FullName>
+        <IsActive>true</IsActive>
+        <AccountType>Income</AccountType>
+        <Balance>215300.50</Balance>
+        <TotalBalance>215300.50</TotalBalance>
+      </AccountRet>
+      <AccountRet>
+        <ListID>100000-4444444444</ListID>
+        <FullName>Office Supplies</FullName>
+        <IsActive>false</IsActive>
+        <AccountType>Expense</AccountType>
+        <Balance>0.00</Balance>
+        <TotalBalance>0.00</TotalBalance>
+      </AccountRet>
+    </AccountQueryRs>
+  </QBXMLMsgsRs>
+</QBXML>

@@ -15,3 +15,10 @@ Thumbs.db
 **/storage/*.key
 **/public/hot
 **/public/storage
+
+# Agent
+agent/**/bin/
+agent/**/obj/
+agent/**/logs/
+**/appsettings.Production.json
+

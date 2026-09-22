@@ -207,26 +207,26 @@ Money columns: `decimal(15,2)`.
 
 **Create `/agent`**
 
-- Worker Service + `Microsoft.Extensions.Hosting.WindowsServices` (service registration is a no-op on non-Windows)
-- `appsettings.json`: `BackendUrl`, `AgentToken`, `CompanyFilePath`, `PollIntervalSeconds` (180), `MockMode`, `CompanyId`
-- Rolling file logs; **never log the token**
-- `--mock` CLI flag **or** `MockMode=true` skips COM
-- Single cycle lock: never overlapping cycles
-- Retry with exponential backoff on POST failure
-- `IQuickBooksReader` interface
-  - `MockQuickBooksReader` — fake Bank / A/R / Income / Expense accounts + ~60 customers with randomly drifting balances
-  - COM implementation is a stub/not-registered in this wave
-- `QbXmlClient` — **the only place that builds qbXML**. Reject any request whose root element does not end in `QueryRq`. Unit test: a non-query request throws
-- After each cycle: `POST {BackendUrl}/api/agent/sync` with `Authorization: Bearer <AgentToken>`
-- Install/uninstall PowerShell scripts can be stubs that print “Wave 5” if needed; real scripts land in Wave 5
+- [x] Worker Service + `Microsoft.Extensions.Hosting.WindowsServices` (service registration is a no-op on non-Windows)
+- [x] `appsettings.json`: `BackendUrl`, `AgentToken`, `CompanyFilePath`, `PollIntervalSeconds` (180), `MockMode`, `CompanyId`
+- [x] Rolling file logs; **never log the token**
+- [x] `--mock` CLI flag **or** `MockMode=true` skips COM
+- [x] Single cycle lock: never overlapping cycles
+- [x] Retry with exponential backoff on POST failure
+- [x] `IQuickBooksReader` interface
+  - [x] `MockQuickBooksReader` — fake Bank / A/R / Income / Expense accounts + ~60 customers with randomly drifting balances
+  - [x] COM implementation is a stub/not-registered in this wave
+- [x] `QbXmlClient` — **the only place that builds qbXML**. Reject any request whose root element does not end in `QueryRq`. Unit test: a non-query request throws
+- [x] After each cycle: `POST {BackendUrl}/api/agent/sync` with `Authorization: Bearer <AgentToken>`
+- [x] Install/uninstall PowerShell scripts can be stubs that print “Wave 5” if needed; real scripts land in Wave 5
 
 **Unit tests**
 
-- Request builder rejects non-`QueryRq`
-- Snapshot payload shape (`company_id`, `synced_at` UTC ISO-8601, accounts, customers)
-- Mock generator produces required account types and ~60 customers
+- [x] Request builder rejects non-`QueryRq`
+- [x] Snapshot payload shape (`company_id`, `synced_at` UTC ISO-8601, accounts, customers)
+- [x] Mock generator produces required account types and ~60 customers
 
-**Done when:** On a non-Windows machine, `dotnet test` passes and `dotnet run -- --mock` pushes a snapshot the Wave 2 backend accepts.
+**Done when:** On a non-Windows machine, `dotnet test` passes and `dotnet run -- --mock` pushes a snapshot the Wave 2 backend accepts. **Met 2026-09-22.** `dotnet test` — 7 passed; mock push accepted HTTP 200 (7 accounts, 60 customers).
 
 ---
 
@@ -236,24 +236,24 @@ Money columns: `decimal(15,2)`.
 
 **COM flow** (Windows-only, behind `IQuickBooksReader`)
 
-1. `Type.GetTypeFromProgID("QBXMLRP2.RequestProcessor2")` — no SDK interop DLLs
-2. `OpenConnection2`
-3. `BeginSession` (company file from config; empty = currently open file; mode = `DoNotCare`)
-4. Negotiate version via `QBXMLVersionsForSession`; fall back to `13.0`
-5. `ProcessRequest` / `EndSession` / `CloseConnection`
-6. Always clean up in `finally`
+1. [x] `Type.GetTypeFromProgID("QBXMLRP2.RequestProcessor2")` — no SDK interop DLLs
+2. [x] `OpenConnection2`
+3. [x] `BeginSession` (company file from config; empty = currently open file; mode = `DoNotCare`)
+4. [x] Negotiate version via `QBXMLVersionsForSession`; fall back to `13.0`
+5. [x] `ProcessRequest` / `EndSession` / `CloseConnection`
+6. [x] Always clean up in `finally`
 
 **Queries each cycle**
 
-- `AccountQueryRq` (`ActiveStatus=All`) → `ListID`, `FullName`, `AccountType`, `IsActive`, `Balance`, `TotalBalance`
-- `CustomerQueryRq` (`ActiveStatus=All`) → `ListID`, `FullName`, `IsActive`, `Balance`, `TotalBalance`, `SalesRepRef/FullName`  
+- [x] `AccountQueryRq` (`ActiveStatus=All`) → `ListID`, `FullName`, `AccountType`, `IsActive`, `Balance`, `TotalBalance`
+- [x] `CustomerQueryRq` (`ActiveStatus=All`) → `ListID`, `FullName`, `IsActive`, `Balance`, `TotalBalance`, `SalesRepRef/FullName`  
   Paginate with `MaxReturned` + `IteratorID`
 
 **Also**
 
-- Sample qbXML response fixtures + parser unit tests
-- `install-service.ps1` / `uninstall-service.ps1` using Windows Service hosting
-- README notes for this folder: run as service, MockMode, token config
+- [x] Sample qbXML response fixtures + parser unit tests
+- [x] `install-service.ps1` / `uninstall-service.ps1` using Windows Service hosting
+- [x] README notes for this folder: run as service, MockMode, token config
 
 **Live test (required — owner has QB Desktop Enterprise)**
 
@@ -266,7 +266,7 @@ When Enterprise is installed on this Windows machine, Wave 5 also includes a rea
 5. Snapshot lands in the backend; Filament sync log = success
 6. Spot-check a few account and customer balances against QB reports
 
-**Done when:** `dotnet test` includes fixture parse tests; install scripts exist; COM path is compiled only on Windows (or guarded so `dotnet build` still works on non-Windows); **and** if QB is installed, one live sync has succeeded.
+**Done when:** `dotnet test` includes fixture parse tests; install scripts exist; COM path is compiled only on Windows (or guarded so `dotnet build` still works on non-Windows); **and** if QB is installed, one live sync has succeeded. **Met 2026-09-22.** Live COM sync succeeded against Enterprise 24 (Rock Castle sample open): **116 accounts**, **146 customers** (2 iterator pages), backend HTTP 200. ProgID `QBXMLRP2.RequestProcessor`; `QBXMLVersionsForSession` absent on this typelib → fallback qbXML **13.0**.
 
 ---
 

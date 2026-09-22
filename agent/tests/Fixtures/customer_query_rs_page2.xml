@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<?qbxml version="13.0"?>
+<QBXML>
+  <QBXMLMsgsRs>
+    <CustomerQueryRs statusCode="0" statusSeverity="Info" statusMessage="Status OK" iteratorRemainingCount="0" iteratorID="ITER-PAGE-1">
+      <CustomerRet>
+        <ListID>80000003-3333333333</ListID>
+        <FullName>Cedar Ridge LLC</FullName>
+        <IsActive>true</IsActive>
+        <Balance>1250.50</Balance>
+        <TotalBalance>1250.50</TotalBalance>
+        <SalesRepRef>
+          <ListID>200000-2</ListID>
+          <FullName>Sam Rivera</FullName>
+        </SalesRepRef>
+      </CustomerRet>
+    </CustomerQueryRs>
+  </QBXMLMsgsRs>
+</QBXML>

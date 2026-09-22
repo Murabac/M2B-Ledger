@@ -99,7 +99,8 @@ Last updated: 2026-09-21 (Wave 0)
 | `CompanyId` | Integer, default `1` (matches seeder) | Agent payload requires it |
 | `BackendUrl` | `http://127.0.0.1:8000` in committed config | Local mock path |
 | qbXML fallback version | `13.0` | Spec |
-| Late-bound COM ProgID | `QBXMLRP2.RequestProcessor2` | Spec |
+| Late-bound COM ProgID | Prefer `QBXMLRP2.RequestProcessor` (then `.2`, docs alias `RequestProcessor2`, legacy `QBXMLRP.RequestProcessor`) | Spec text said `RequestProcessor2`; Enterprise 24 registers `QBXMLRP2.RequestProcessor` |
+| `QBXMLVersionsForSession` | Call when present; on DISP_E_MEMBERNOTFOUND fall back to `13.0` | Enterprise 24 typelib omits the method |
 | Session mode | `DoNotCare` | Spec |
 | Customer `MaxReturned` | **100** | Reasonable page; iterator continues until done |
 | Cycle overlap | `SemaphoreSlim(1,1)` / compare-and-skip if previous cycle still running | Spec |
@@ -111,6 +112,10 @@ Last updated: 2026-09-21 (Wave 0)
 | Mock OS | COM types compiled only for `net8.0-windows` **or** stubbed behind `#if WINDOWS`; `IQuickBooksReader` is the seam | Spec: mock on non-Windows |
 | Install scripts | `agent/scripts/install-service.ps1`, `uninstall-service.ps1` | Spec |
 | Time | `synced_at` = `DateTime.UtcNow` round-trip ISO-8601 (`yyyy-MM-ddTHH:mm:ssZ`) | Spec |
+| Project layout | `agent/src/QbBalances.Agent` + `agent/tests/QbBalances.Agent.Tests` + `agent/QbBalances.Agent.sln` | Standard .NET layout |
+| Config section | JSON section `Agent` (bound to `AgentOptions`) | Groups agent keys; env override `Agent__AgentToken` |
+| `AppName` | `QB Balances Sync Agent` | Passed to `OpenConnection2`; matches service display name |
+| Publish RID (service) | `win-x86` | QB Request Processor is commonly 32-bit COM |
 
 ---
 

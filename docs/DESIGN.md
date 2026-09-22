@@ -97,6 +97,8 @@ Dark mode also remaps Filament `--gray-*` CSS variables to green-tinted RGB so d
 | Token | Light | Dark | CSS variable |
 |-------|-------|------|----------------|
 | Card radius | `0.75rem` (xl), overflow clips chrome | same | `--m2b-table-radius` |
+| Card outer border | `#d1d5db` | `#1a2b22` | `--m2b-table-border` |
+| Cell grid | row + column dividers | same | `--m2b-table-divider` / header border |
 | Column header bg | `#166534` (sidebar green) | `#0f1f17` | `--m2b-table-header-bg` |
 | Column header text | `#ffffff` | `#86efac` | `--m2b-table-header-color` |
 | Sort icons | white @ 85% (hover 100%) | `#86efac` | `--m2b-table-header-sort` |
