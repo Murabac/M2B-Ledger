@@ -276,26 +276,26 @@ When Enterprise is installed on this Windows machine, Wave 5 also includes a rea
 
 **Stack (locked)**
 
-- Flutter (Android + iOS)
-- Riverpod, Dio, go_router, flutter_secure_storage
-- intl currency formatting; currency code via `--dart-define=CURRENCY=USD`
-- API base URL via `--dart-define=API_BASE_URL=http://10.0.2.2:8000`
+- [x] Flutter (Android + iOS)
+- [x] Riverpod, Dio, go_router, flutter_secure_storage
+- [x] intl currency formatting; currency code via `--dart-define=CURRENCY=USD`
+- [x] API base URL via `--dart-define=API_BASE_URL=…` (default `http://127.0.0.1:8000`; Android emulator `http://10.0.2.2:8000`)
 
 **This wave**
 
-- Light + dark professional theme
-- Login screen
-- Secure token storage
-- Dio client with Bearer interceptor
-- Persistent last-synced banner widget (green/neutral; red + warning when `is_stale=true`)
-- Role-aware router **shell** (empty destinations ok)
-- Cache last JSON responses for offline (flag “offline data”) — hook can be wired even if only status/login exist
+- [x] Light + dark professional theme
+- [x] Login screen
+- [x] Secure token storage
+- [x] Dio client with Bearer interceptor
+- [x] Persistent last-synced banner widget (green/neutral; red + warning when `is_stale=true`)
+- [x] Role-aware router **shell** (empty destinations ok)
+- [x] Cache last JSON responses for offline (flag “offline data”) — hook can be wired even if only status/login exist
 
 **Widget tests**
 
-- Stale banner turns red when `is_stale=true`
+- [x] Stale banner turns red when `is_stale=true`
 
-**Done when:** `flutter test` passes for the banner; app logs in against a running Wave 2 backend.
+**Done when:** `flutter test` passes for the banner; app logs in against a running Wave 2 backend. **Met 2026-09-22.** `flutter test` — 3 passed; `dart run tool/login_smoke.dart` login + `/api/status` OK.
 
 ---
 
@@ -315,17 +315,17 @@ When Enterprise is installed on this Windows machine, Wave 5 also includes a rea
 
 **Behavior**
 
-- Persistent “Last synced X min ago” on every main screen; red + warning if stale
-- Pull-to-refresh reloads from backend
-- Last response cached; show “offline data” when serving cache
-- Navigation hides Accounts / Dashboard for roles that cannot use them (sales_rep: Customers only + maybe a thin home)
+- [x] Persistent “Last synced X min ago” on every main screen; red + warning if stale
+- [x] Pull-to-refresh reloads from backend
+- [x] Last response cached; show “offline data” when serving cache
+- [x] Navigation hides Accounts / Dashboard for roles that cannot use them (sales_rep: Customers only + maybe a thin home)
 
 **Widget tests**
 
-- Role-based navigation: sales_rep does not see Accounts; owner sees Dashboard + Accounts + Customers
-- Stale banner (if not already fully covered in Wave 6)
+- [x] Role-based navigation: sales_rep does not see Accounts; owner sees Dashboard + Accounts + Customers
+- [x] Stale banner (if not already fully covered in Wave 6)
 
-**Done when:** `flutter test` is green for nav + banner; manual role login works against seeded users.
+**Done when:** `flutter test` is green for nav + banner; manual role login works against seeded users. **Met 2026-09-22.** Live `/api/summary`, `/api/accounts`, `/api/customers` (+ detail) via Riverpod + Dio cache.
 
 ---
 

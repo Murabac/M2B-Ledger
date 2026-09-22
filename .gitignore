@@ -22,3 +22,17 @@ agent/**/obj/
 agent/**/logs/
 **/appsettings.Production.json
 
+# Flutter / mobile
+mobile/.dart_tool/
+mobile/.flutter-plugins-dependencies
+mobile/build/
+mobile/.packages
+mobile/android/.gradle/
+mobile/android/local.properties
+mobile/.idea/
+**/*.jks
+**/key.properties
+
+# Local-only secrets
+**/agent_token_local.txt
+

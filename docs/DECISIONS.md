@@ -2,7 +2,7 @@
 
 Unspecified items from the product spec, locked so implementation never stalls. If a later wave must change a default, update this file in the same PR/commit as the code.
 
-Last updated: 2026-09-21 (Wave 0)
+Last updated: 2026-09-22 (Wave 7)
 
 ---
 
@@ -130,7 +130,8 @@ Last updated: 2026-09-21 (Wave 0)
 | Routing | go_router | Spec |
 | Token store | flutter_secure_storage | Spec |
 | Currency | `USD` via `--dart-define=CURRENCY=USD` | US-centric QB Desktop default |
-| API URL | `--dart-define=API_BASE_URL=http://127.0.0.1:8000` (iOS sim / desktop); Android emulator uses `http://10.0.2.2:8000` | Localhost mapping |
+| API URL | Default `http://127.0.0.1:8000` via `--dart-define=API_BASE_URL`; Android emulator uses `http://10.0.2.2:8000` | Localhost mapping; WAVES Android example kept as override |
+| Offline cache impl | `shared_preferences` JSON keyed by path (`ResponseCache`) | Spec allows file or shared_preferences |
 | Theme | Material 3, light + dark, seed color `#0F4C81` (ink blue) | Professional, not playful |
 | Offline cache | Last successful JSON per endpoint in a local file (or Hive/shared_preferences JSON). Banner/chip: **“Offline data”**. Do not encrypt cache in MVP (token is already in secure storage). | Spec |
 | Last-synced copy | “Last synced just now” / “Last synced X min ago” / “Last synced X hr ago”; stale: red banner + “Data may be out of date” | Spec |
@@ -139,6 +140,10 @@ Last updated: 2026-09-21 (Wave 0)
 | collections nav | Accounts + Customers + thin status home (no key-account dashboard) | collections can see accounts but not owner-only key accounts |
 | owner / admin nav | Dashboard + Accounts + Customers | Spec |
 | Min Flutter | Stable 3.24+ | Current stable at plan time |
+| Accounts type chips | Map UI labels to QB `account_type`: All→(none), Bank, A/R→`AccountsReceivable`, A/P→`AccountsPayable`, Income, Expense | Matches Wave 2 `?type=` filter |
+| Customers list paging | Show Laravel page size (25); Previous / Load more | Backend ignores custom `per_page` |
+| Customer search debounce | **350ms** before hitting `/api/customers` | Avoids a request per keystroke |
+| Offline chip | Screen-level “Offline data” chip when that endpoint’s payload is from `ResponseCache` | Banner already flags cached `/api/status` |
 
 ---
 
