@@ -335,16 +335,16 @@ When Enterprise is installed on this Windows machine, Wave 5 also includes a rea
 
 **Root `README.md`**
 
-- What the system is
-- How to run backend, agent (mock + service), mobile
-- Environment variables
-- How to create an agent token in Filament
-- Link to TESTING.md and DECISIONS.md
+- [x] What the system is
+- [x] How to run backend, agent (mock + service), mobile
+- [x] Environment variables
+- [x] How to create an agent token in Filament
+- [x] Link to TESTING.md and DECISIONS.md
 
 **`docs/TESTING.md`**
 
-- **(a) No-QuickBooks path:** backend + agent `--mock` + mobile vs localhost
-- **(b) Real-QuickBooks path:**
+- [x] **(a) No-QuickBooks path:** backend + agent `--mock` + mobile vs localhost
+- [x] **(b) Real-QuickBooks path:**
   - Prerequisites: QB Desktop Enterprise + sample company file on the Windows machine
   - Authorize the agent as an integrated application
   - Unattended access for a **view-only** QB user
@@ -352,17 +352,17 @@ When Enterprise is installed on this Windows machine, Wave 5 also includes a rea
 
 **Security notes (README + ARCHITECTURE)**
 
-- HTTPS only in production
-- View-only QuickBooks user for the agent
-- Per-company agent tokens
-- No secrets in git (`.env.example` only)
+- [x] HTTPS only in production
+- [x] View-only QuickBooks user for the agent
+- [x] Per-company agent tokens
+- [x] No secrets in git (`.env.example` only)
 
 **Also**
 
-- Confirm `.gitignore` covers `.env`, agent tokens, `appsettings.Production.json`, Flutter keystores
-- Confirm all three test suites still pass
+- [x] Confirm `.gitignore` covers `.env`, agent tokens, `appsettings.Production.json`, Flutter keystores
+- [x] Confirm all three test suites still pass
 
-**Done when:** README + TESTING.md are accurate against the code that actually shipped.
+**Done when:** README + TESTING.md are accurate against the code that actually shipped. **Met 2026-09-22.** Suites: backend `php artisan test` — 40 passed; agent `dotnet test` — 16 passed; mobile `flutter test` — 7 passed.
 
 ---
 

@@ -234,3 +234,22 @@ Currency via `intl` and `--dart-define=CURRENCY=USD`.
 | Token | Created once in Filament | Per-company token, rotated as needed |
 
 See `docs/TESTING.md` (Wave 8) for the step-by-step of both paths.
+
+---
+
+## Security notes
+
+Locked for production documentation (also summarized in the root README):
+
+| Rule | Detail |
+|------|--------|
+| Transport | **HTTPS only** outside the trusted Windows box. Local mock/dev may use HTTP (`127.0.0.1`). |
+| QuickBooks user | Dedicated **view-only** (read-only) user; unattended integrated-app access for the agent |
+| Agent qbXML | Built only in `QbXmlClient`; root element must end with `QueryRq` (no writes) |
+| Agent credentials | One hashed token per company (`sha256` of 96-char hex). Rotate by creating a new Filament token and revoking the old. Never store plaintext after the one-time reveal. |
+| Mobile credentials | Sanctum personal access tokens; logout revokes the current token |
+| Secrets in git | Forbidden: `.env`, `appsettings.Production.json`, plaintext agent tokens, Flutter `*.jks` / `key.properties` |
+| Mobile ↔ QB | Mobile never contains QB SDK, company paths, or COM |
+
+Trust boundaries (diagram above) remain the source of truth for who talks to whom.
+

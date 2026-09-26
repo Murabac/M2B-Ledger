@@ -1,6 +1,8 @@
-# QB Balances (Flutter)
+# QB Balances (Flutter) — M2B Ledger
 
-Wave 6 foundation: login, secure token, Dio + Bearer, last-synced banner, role-aware shell.
+Waves 6–7: login, secure token, Dio + Bearer, last-synced banner, role-aware shell, and live Home / Accounts / Customers screens with offline cache.
+
+Full monorepo setup: [`../README.md`](../README.md). Verification: [`../docs/TESTING.md`](../docs/TESTING.md).
 
 ## Run
 
@@ -23,6 +25,8 @@ flutter run --dart-define=API_BASE_URL=http://10.0.2.2:8000 --dart-define=CURREN
 
 Seed user: `owner@demo.test` / `Password123!` (see `docs/DECISIONS.md`).
 
+Pull-to-refresh reloads the API snapshot only — the Windows agent performs QuickBooks sync.
+
 ## Branding / UI
 
 Assets live in `assets/branding/` (all declared via `assets/branding/`):
@@ -38,4 +42,10 @@ Assets live in `assets/branding/` (all declared via `assets/branding/`):
 ```powershell
 dart run flutter_launcher_icons
 dart run flutter_native_splash:create
+```
+
+## Tests
+
+```powershell
+flutter test
 ```

@@ -2,7 +2,7 @@
 
 Unspecified items from the product spec, locked so implementation never stalls. If a later wave must change a default, update this file in the same PR/commit as the code.
 
-Last updated: 2026-09-22 (Wave 7)
+Last updated: 2026-09-22 (Wave 8)
 
 ---
 
